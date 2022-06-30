@@ -1,0 +1,35 @@
+version: '3.7'
+
+services:
+  db:
+    container_name: psql
+    image: postgres
+    volumes:
+      - ./eventify-back/pg_data:/var/lib/postgresql/pg_data
+      - ./eventify-back/scripts:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_DB=eventify
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - PGDATA=/var/lib/pg_data
+    ports:
+      - '5432:5432'
+  eventify-back:
+    container_name: api
+    build:
+      context: ./eventify-back
+      dockerfile: Dockerfile
+    volumes:
+      - ./eventify-back:/app
+    environment:
+      - POSTGRES_DB=eventify
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
+    ports:
+      - '3000:3000'
+      - '4000:4000'
+    depends_on:
+      - db
