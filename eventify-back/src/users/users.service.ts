@@ -13,50 +13,32 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto) {
     const user = await this.userModel.create(createUserDto);
-    console.log(user)
-    return {
-      statusCode: 200,
-      user
-    };
+    return user
   }
 
   async findAll() {
     const users = await this.userModel.findAll();
-    console.log(users);
-    return {
-      statusCode: 200,
-      users
-    };
+    return users
   }
 
   async findOne(id: number) {
     const user = await this.userModel.findByPk(id);
     if (user === null) {
-      console.log('Not found!');
       throw new BadRequestException('Invalid id');
     }
-    return {
-      statusCode: 200,
-      user,
-    };
+    return user
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
     const res = await this.userModel.update(updateUserDto, { where: { id } });
-    console.log(res)
     if (res[0] === 1) {
       const user = await this.userModel.findByPk(id);
-      return {
-        statusCode: 200,
-        user,
-      };
+      return user
     };
-    throw new BadRequestException();
+    return null; // maybe some log here
   }
 
   async remove(id: number) {
-    const res = await this.userModel.destroy({ where: { id } }); // should copy to another table then remove or use a flag
-    if (res === 1) return { statusCode: 204};
-    throw new BadRequestException('Invalid Id');
+    return await this.userModel.destroy({ where: { id } }); // should copy to another table then remove or use a flag
   }
 }
