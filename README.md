@@ -1,4 +1,4 @@
-<h3 align="center">project_title</h3>
+<h3 align="center">Eventify</h3>
 
   <p align="center">
     Let's manage events!

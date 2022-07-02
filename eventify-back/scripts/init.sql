@@ -1,4 +1,4 @@
-CREATE TABLE users (
+CREATE TABLE "Users" (
   id SERIAL PRIMARY KEY NOT NULL,
   username VARCHAR(40) NOT NULL,
   password VARCHAR(60) NOT NULL,
@@ -9,4 +9,4 @@ CREATE TABLE users (
   "updatedAt" TIMESTAMP
 );
 
-INSERT INTO users(username, password) VALUES ('Pum', 'Pim');
+INSERT INTO "Users"(username, password) VALUES ('Pum', 'Pim');

@@ -1,14 +1,23 @@
-import { IsEmail, IsOptional, IsString, IsNotEmpty, IsBoolean, IsDateString } from "class-validator";
+import { IsEmail, IsOptional, IsString, IsNotEmpty, IsBoolean, IsDateString, MaxLength } from "class-validator";
 export class CreateUserDto {
   @IsNotEmpty()
   @IsString()
+  @MaxLength(40, {
+    message: 'username is too long',
+  })
   username: string;
 
   @IsNotEmpty()
   @IsString()
+  @MaxLength(60, {
+    message: 'password is too long',
+  })
   password: string;
 
   @IsEmail()
+  @MaxLength(100, {
+    message: 'email is too long',
+  })
   email: string;
 
   @IsOptional()
@@ -17,5 +26,5 @@ export class CreateUserDto {
 
   @IsOptional()
   @IsDateString()
-  confirmedOn: string;
+  confirmedOn: Date; // new Date().toISOString()
 }
